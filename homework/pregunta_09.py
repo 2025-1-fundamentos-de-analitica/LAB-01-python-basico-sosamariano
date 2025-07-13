@@ -4,7 +4,7 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+import csv
 
 def pregunta_09():
     """
@@ -24,3 +24,15 @@ def pregunta_09():
      'jjj': 18}}
 
     """
+    archivo = "files/input/data.csv"
+    conteo_claves = {}
+
+    with open(archivo, newline='', encoding='utf-8') as f:
+        lector = csv.reader(f, delimiter='\t')
+        for fila in lector:
+            pares = fila[4].split(',')
+            for par in pares:
+                clave, _ = par.split(':')
+                conteo_claves[clave] = conteo_claves.get(clave, 0) + 1
+
+    return dict(sorted(conteo_claves.items()))

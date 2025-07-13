@@ -5,6 +5,7 @@ solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
 
+import csv
 
 def pregunta_08():
     """
@@ -27,3 +28,18 @@ def pregunta_08():
      (9, ['A', 'B', 'C', 'E'])]
 
     """
+    
+    archivo = "files/input/data.csv"
+    asociaciones = {}
+
+    with open(archivo, newline='', encoding='utf-8') as f:
+        lector = csv.reader(f, delimiter='\t')
+        for fila in lector:
+            letra = fila[0]
+            numero = int(fila[1])
+            if numero not in asociaciones:
+                asociaciones[numero] = set()
+            asociaciones[numero].add(letra)
+
+    resultado = [(numero, sorted(asociaciones[numero])) for numero in sorted(asociaciones)]
+    return resultado
